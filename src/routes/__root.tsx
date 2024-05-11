@@ -1,20 +1,26 @@
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { Link as A, Container, Divider, HStack, UIProvider } from '@yamada-ui/react'
 
 export const Route = createRootRoute({
   component: () => (
-    <>
-      <div className="p-2 flex gap-2">
+    <UIProvider>
+      <Container>
+      <HStack className="p-2 flex gap-2">
         <Link to="/" className="[&.active]:font-bold">
-          Home
+          <A>Home</A>
         </Link>{' '}
         <Link to="/about" className="[&.active]:font-bold">
-          About
+          <A>About</A>
         </Link>
-      </div>
-      <hr />
+        <Link to="/todos" className="[&.active]:font-bold">
+          <A>Todos</A>
+        </Link>
+      </HStack>
+      <Divider />
       <Outlet />
       <TanStackRouterDevtools />
-    </>
+      </Container>
+    </UIProvider>
   ),
 })
