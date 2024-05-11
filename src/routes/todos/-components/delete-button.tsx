@@ -1,6 +1,6 @@
 import { useConfirm } from "@/ui/confirm";
 import { Button } from "@yamada-ui/react";
-import { FC, useCallback } from "react";
+import { type FC, useCallback } from "react";
 
 export const DeleteButton: FC = () => {
     const { Dialog, confirm } = useConfirm();
@@ -14,8 +14,8 @@ export const DeleteButton: FC = () => {
 
     return (
         <>
-        <Button onClick={handleClick}>削除</Button>
-        <Dialog>削除しますか？</Dialog>
+            <Button onClick={handleClick}>削除</Button>
+            <Dialog>削除しますか？</Dialog>
         </>
     );
-}
+};

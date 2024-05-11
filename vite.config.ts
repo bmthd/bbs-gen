@@ -2,8 +2,8 @@
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react-swc'
 import { defaultConfig, getColorModeScript } from "@yamada-ui/react"
-import * as path from 'path'
-import { Plugin, defineConfig } from 'vite'
+import * as path from 'node:path'
+import { type Plugin, defineConfig } from 'vite'
 
 const injectScript = (): Plugin => {
   return {

@@ -5,7 +5,7 @@ type State = {
   resolve: (isSuccess: boolean) => void;
 };
 
-const initialState:State = {
+const initialState: State = {
   isOpen: false,
   resolve: () => {},
 };
