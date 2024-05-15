@@ -13,8 +13,8 @@ export const Route = createRootRoute({
           <Link to="/about" className="[&.active]:font-bold">
             <A>About</A>
           </Link>
-          <Link to="/todos" className="[&.active]:font-bold">
-            <A>Todos</A>
+          <Link to="/todo" className="[&.active]:font-bold">
+            <A>Todo</A>
           </Link>
         </HStack>
         <Divider />

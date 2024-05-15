@@ -13,7 +13,8 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TodosRouteImport } from './routes/todos/route'
+import { Route as TodoRouteImport } from './routes/todo/route'
+import { Route as MidashiRouteImport } from './routes/midashi/route'
 
 // Create Virtual Routes
 
@@ -27,8 +28,13 @@ const AboutLazyRoute = AboutLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 
-const TodosRouteRoute = TodosRouteImport.update({
-  path: '/todos',
+const TodoRouteRoute = TodoRouteImport.update({
+  path: '/todo',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const MidashiRouteRoute = MidashiRouteImport.update({
+  path: '/midashi',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -45,8 +51,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexLazyImport
       parentRoute: typeof rootRoute
     }
-    '/todos': {
-      preLoaderRoute: typeof TodosRouteImport
+    '/midashi': {
+      preLoaderRoute: typeof MidashiRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/todo': {
+      preLoaderRoute: typeof TodoRouteImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -60,7 +70,8 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
-  TodosRouteRoute,
+  MidashiRouteRoute,
+  TodoRouteRoute,
   AboutLazyRoute,
 ])
 

@@ -1,9 +1,9 @@
 /// <reference types="vitest"/>
-import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
-import react from '@vitejs/plugin-react-swc'
-import { defaultConfig, getColorModeScript } from "@yamada-ui/react"
-import * as path from 'node:path'
-import { type Plugin, defineConfig } from 'vite'
+import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
+import react from "@vitejs/plugin-react-swc";
+import { defaultConfig, getColorModeScript } from "@yamada-ui/react";
+import * as path from "node:path";
+import { type Plugin, defineConfig } from "vite";
 
 const injectScript = (): Plugin => {
   return {
@@ -11,18 +11,16 @@ const injectScript = (): Plugin => {
     transformIndexHtml(html) {
       const content = getColorModeScript({
         initialColorMode: defaultConfig.initialColorMode,
-      })
-      return html.replace("<body>", `<body><script>${content}</script>`)
+      });
+      return html.replace("<body>", `<body><script>${content}</script>`);
     },
-  }
-}
+  };
+};
 
 export default defineConfig({
-  plugins: [react(),TanStackRouterVite(),injectScript()],
+  plugins: [react(), TanStackRouterVite(), injectScript()],
   resolve: {
-    alias: [
-        { find: '@', replacement: path.resolve(__dirname, 'src') },
-    ],
+    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },
   test: {
     globals: true,
@@ -34,4 +32,4 @@ export default defineConfig({
     },
     exclude: ["./node_modules/**", "./e2e/**/*"],
   },
-})
+});

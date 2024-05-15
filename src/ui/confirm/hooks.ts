@@ -14,7 +14,7 @@ const initialState: State = {
  * 確認ダイアログの状態管理実装
  */
 export const useConfirmState = () => {
-  const [state, setState] = useState<State>(initialState);
+  const [{ isOpen, resolve }, setState] = useState<State>(initialState);
 
   const confirm = useCallback(
     () =>
@@ -24,23 +24,23 @@ export const useConfirmState = () => {
     [],
   );
 
-  const handleOk = useCallback(() => {
-    state.resolve(true);
+  const handleSuccess = useCallback(() => {
+    resolve(true);
     setState(initialState);
-  }, [state]);
+  }, [resolve]);
 
   const handleCancel = useCallback(() => {
-    state.resolve(false);
+    resolve(false);
     setState(initialState);
-  }, [state]);
+  }, [resolve]);
 
   return {
     /** ダイアログの開閉状態 */
-    isOpen: state.isOpen,
+    isOpen,
     /** 確認ダイアログの操作を待機する関数 */
     confirm,
     /** 確認ダイアログのOKボタンを押した時の処理 */
-    handleOk,
+    handleSuccess,
     /** 確認ダイアログのキャンセルボタンを押した時の処理 */
     handleCancel,
   };

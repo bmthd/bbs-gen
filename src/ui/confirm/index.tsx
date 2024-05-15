@@ -1,5 +1,5 @@
 import { Button, Dialog as Component } from "@yamada-ui/react";
-import { useCallback, useMemo, type FC, type ReactNode } from "react";
+import { useCallback, type FC, type ComponentProps, type ReactNode } from "react";
 import { useConfirmState } from "./hooks";
 
 /**
@@ -7,37 +7,27 @@ import { useConfirmState } from "./hooks";
  * ダイアログ内に表示される内容と、確認関数の結果を利用側で実装する
  */
 export const useConfirm = () => {
-  const { isOpen, confirm, handleOk, handleCancel } = useConfirmState();
+  const { isOpen, confirm, handleSuccess, handleCancel } = useConfirmState();
 
-  const successButton = useMemo(
-    () => (
-      <Button bg={"blue.500"} onClick={handleOk}>
-        <span>OK</span>
-      </Button>
-    ),
-    [handleOk]
-  );
-  const cancelButton = useMemo(
-    () => (
-      <Button onClick={handleCancel}>
-        <span>キャンセル</span>
-      </Button>
-    ),
-    [handleCancel]
-  );
-  const Dialog: FC<{ children: ReactNode }> = useCallback(
-    ({ children }) => (
+  const Dialog: FC<{ cancelText?: ReactNode, successText?: ReactNode } & Omit<ComponentProps<typeof Component>, 'isOpen' | 'onClose'>> = useCallback(
+    ({ cancelText = "キャンセル", successText = "OK", ...props }) => (
       <Component
         isOpen={isOpen}
         onClose={handleCancel}
-        cancel={cancelButton}
-        success={successButton}
-        className="m-4 flex h-auto w-4/5 max-w-screen-sm flex-col items-center justify-between overflow-hidden rounded-lg bg-white p-4 shadow-2xl"
-      >
-        {children}
-      </Component>
+        cancel={
+          <Button onClick={handleCancel}>
+            {cancelText}
+          </Button>
+        }
+        success={
+          <Button bg={"blue.500"} onClick={handleSuccess}>
+            {successText}
+          </Button>
+        }
+        {...props}
+      />
     ),
-    [isOpen, handleCancel, cancelButton, successButton]
+    [isOpen, handleCancel, handleSuccess]
   );
   return {
     /** ダイアログコンポーネント */
