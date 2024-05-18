@@ -1,5 +1,9 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.6.2/schema.json",
+  "organizeImports": {
+    "enabled": true,
+    "ignore": ["node_modules","bun.lockb"]
+  },
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
