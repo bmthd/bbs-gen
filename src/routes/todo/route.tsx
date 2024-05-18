@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FormControl, Input, Label, VStack } from "@yamada-ui/react";
-import { DeleteButton } from "./-components";
 import type { FC } from "react";
 import { H, Main } from "midashi";
+import { DeleteButton } from "./-components/delete-button";
 
 const component: FC = () => (
   <>
@@ -18,7 +18,7 @@ const component: FC = () => (
       </VStack>
     </Main>
   </>
-)
+);
 
 export const Route = createFileRoute("/todo")({
   component,

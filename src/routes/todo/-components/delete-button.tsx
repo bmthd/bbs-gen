@@ -1,21 +1,21 @@
-import { useConfirm } from "@/ui/confirm";
+import { ConfirmDialog } from "@/ui/confirm-dialog";
 import { Button } from "@yamada-ui/react";
-import { type FC, useCallback } from "react";
+import { type FC, useCallback, useRef } from "react";
 
 export const DeleteButton: FC = () => {
-    const { Dialog, confirm } = useConfirm();
+  const ref = useRef<{ confirm: () => Promise<boolean> }>(null);
 
-    const handleClick = useCallback(async () => {
-        const result = await confirm();
-        if (result) {
-            console.log("削除処理を実行");
-        }
-    }, [confirm]);
+  const handleClick = useCallback(async () => {
+    console.log(ref.current);
+    if (await ref.current?.confirm()) {
+      console.log("削除処理を実行");
+    }
+  }, []);
 
-    return (
-        <>
-            <Button onClick={handleClick}>削除</Button>
-            <Dialog>削除しますか？</Dialog>
-        </>
-    );
+  return (
+    <>
+      <Button onClick={handleClick}>削除</Button>
+      <ConfirmDialog ref={ref}>削除しますか？</ConfirmDialog>
+    </>
+  );
 };
