@@ -27,21 +27,21 @@ export const useTodo = () => {
     (todo: Todo) => {
       setTodos((prev) => [...prev, todo]);
     },
-    [setTodos]
+    [setTodos],
   );
 
   const removeTodo = useCallback(
     (index: number) => {
       setTodos((prev) => prev.filter((_, i) => i !== index));
     },
-    [setTodos]
+    [setTodos],
   );
 
   const updateTodo = useCallback(
     (index: number, todo: Todo) => {
       setTodos((prev) => prev.map((t, i) => (i === index ? todo : t)));
     },
-    [setTodos]
+    [setTodos],
   );
 
   return {
