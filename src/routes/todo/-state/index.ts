@@ -17,6 +17,7 @@ export const useTodo = () => {
   const useTodoValue = (index: number) => {
     const todoAtoms = useAtomValue(todosAtomsAtom);
     const todoAtom = todoAtoms[index];
+    if (!todoAtom) throw new Error("invalid index");
     const todo = useAtomValue(todoAtom);
     return todo;
   };
