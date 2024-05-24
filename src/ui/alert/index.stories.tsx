@@ -4,9 +4,10 @@ import { Button } from "@yamada-ui/react";
 
 const AddAlertButton = (props: AlertStatus) => {
   const { addAlert } = useAlert();
+  const handleClick = () => addAlert(props);
   return (
     <AlertProvider>
-      <Button bg={"blue.500"} color={"white"} onClick={() => addAlert(props)}>
+      <Button bg={"blue.500"} color={"white"} onClick={handleClick}>
         Add Alert
       </Button>
     </AlertProvider>

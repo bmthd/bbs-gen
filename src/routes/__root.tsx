@@ -1,6 +1,7 @@
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Link as A, Container, Divider, HStack, UIProvider } from "@yamada-ui/react";
+import "@/assets/app.css";
 
 export const Route = createRootRoute({
   component: () => (
