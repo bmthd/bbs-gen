@@ -1,55 +1,33 @@
+import type { Todo } from "@/features/todo/types";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { splitAtom } from "jotai/utils";
+import { atomWithStorage, splitAtom } from "jotai/utils";
 import { useCallback } from "react";
 
-export type Todo = {
-  text: string;
-  isComplete: boolean;
-};
+const todosAtom = atomWithStorage<Todo[]>("todo", []);
 
-const todosAtom = atom<Todo[]>([]);
+const addTodoAtom = atom(null, (_get, set, todo: Omit<Todo, "id">) => {
+  set(todosAtom, (prev) => [...prev, { id: crypto.randomUUID(), ...todo }]);
+});
 
-const todosAtomsAtom = splitAtom(todosAtom);
+const deleteTodoAtom = atom(null, (_get, set, id: string) => {
+  set(todosAtom, (prev) => prev.filter((todo) => todo.id !== id));
+});
 
-export const useTodo = () => {
-  const todoIds = useAtomValue(todosAtomsAtom).map((_, i) => i);
+const updateTodoAtom = atom(null, (_get, set, todo: Todo) => {
+  set(todosAtom, (prev) => prev.map((t) => (t.id === todo.id ? { ...t, ...todo } : t)));
+});
 
-  const useTodoValue = (index: number) => {
-    const todoAtoms = useAtomValue(todosAtomsAtom);
-    const todoAtom = todoAtoms[index];
-    if (!todoAtom) throw new Error("invalid index");
-    const todo = useAtomValue(todoAtom);
-    return todo;
-  };
+const resetTodosAtom = atom(null, (_get, set) => {
+  set(todosAtom, []);
+});
 
-  const setTodos = useSetAtom(todosAtom);
+const todoAtomsAtom = splitAtom(todosAtom);
 
-  const addTodo = useCallback(
-    (todo: Todo) => {
-      setTodos((prev) => [...prev, todo]);
-    },
-    [setTodos],
-  );
+export const useTodos = () => useAtomValue(todoAtomsAtom);
 
-  const removeTodo = useCallback(
-    (index: number) => {
-      setTodos((prev) => prev.filter((_, i) => i !== index));
-    },
-    [setTodos],
-  );
-
-  const updateTodo = useCallback(
-    (index: number, todo: Todo) => {
-      setTodos((prev) => prev.map((t, i) => (i === index ? todo : t)));
-    },
-    [setTodos],
-  );
-
-  return {
-    todoIds,
-    useTodoValue,
-    addTodo,
-    removeTodo,
-    updateTodo,
-  };
-};
+export const useTodoMutation = () => ({
+  addTodo: useCallback(useSetAtom(addTodoAtom), []),
+  deleteTodo: useCallback(useSetAtom(deleteTodoAtom), []),
+  updateTodo: useCallback(useSetAtom(updateTodoAtom), []),
+  resetTodos: useCallback(useSetAtom(resetTodosAtom), []),
+});

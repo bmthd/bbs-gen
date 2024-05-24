@@ -16,6 +16,9 @@ export const Route = createRootRoute({
           <Link to="/todo" className="[&.active]:font-bold">
             <A>Todo</A>
           </Link>
+          <Link to="/midashi">
+            <A>Midashi</A>
+          </Link>
         </HStack>
         <Divider />
         <Outlet />
