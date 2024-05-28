@@ -1,6 +1,6 @@
 import { ConfirmDialog } from "@/ui/confirm-dialog";
 import { Button } from "@yamada-ui/react";
-import { type FC, useCallback, useRef } from "react";
+import { useCallback, useRef, type FC } from "react";
 
 export const DeleteButton: FC = () => {
   const ref = useRef<{ confirm: () => Promise<boolean> }>(null);

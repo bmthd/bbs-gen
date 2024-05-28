@@ -26,8 +26,8 @@
       "@/*": ["./src/*"]
     },
     "types": ["vitest/globals"],
-    "plugins": [{"name": "eslint-plugin-import-access"}]
+    "plugins": [{ "name": "eslint-plugin-import-access" }]
   },
-  "include": ["src","eslint.config.js"],
+  "include": ["src", "eslint.config.js", "eslint"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

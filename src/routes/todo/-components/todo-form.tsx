@@ -1,4 +1,4 @@
-import { getInputProps, useForm, getFormProps, getTextareaProps } from "@conform-to/react";
+import { getFormProps, getInputProps, getTextareaProps, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { Button, Checkbox, Input, Label, Textarea, VStack } from "@yamada-ui/react";
 import type { FC } from "react";
@@ -30,7 +30,6 @@ export const TodoForm: FC = () => {
   });
 
   return (
-    // @ts-ignore
     <VStack as="form" {...getFormProps(form)}>
       <Label htmlFor={fields.title.id}>タイトル</Label>
       <Input {...getInputProps(fields.title, { type: "text" })} />

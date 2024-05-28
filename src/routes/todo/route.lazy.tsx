@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { VStack } from "@yamada-ui/react";
-import type { FC } from "react";
 import { H, Main } from "midashi";
+import type { FC } from "react";
 import { DeleteButton, TodoForm, TodoItem } from "./-components";
 
 const component: FC = () => (
