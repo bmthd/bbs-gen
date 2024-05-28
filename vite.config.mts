@@ -1,19 +1,21 @@
 /// <reference types="vitest"/>
+
+import tailwindcss from "@tailwindcss/vite";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import { defaultConfig, getColorModeScript } from "@yamada-ui/react";
 import * as path from "node:path";
-import { type Plugin, defineConfig } from "vite";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, type Plugin } from "vite";
 
 const injectScript = (): Plugin => ({
   name: "vite-plugin-inject-scripts",
-  transformIndexHtml(html) {
-    const content = getColorModeScript({
-      initialColorMode: defaultConfig.initialColorMode,
-    });
-    return html.replace("<body>", `<body><script>${content}</script>`);
-  },
+  transformIndexHtml: (html) =>
+    html.replace(
+      "<body>",
+      `<body><script>${getColorModeScript({
+        initialColorMode: defaultConfig.initialColorMode,
+      })}</script>`,
+    ),
 });
 
 export default defineConfig({
