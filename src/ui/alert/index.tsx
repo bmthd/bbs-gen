@@ -1,5 +1,5 @@
-import { Alert, AlertIcon, AlertTitle, AlertDescription } from "@yamada-ui/react";
-import { type FC, createContext, useContext, type ReactNode, useCallback } from "react";
+import { Alert, AlertDescription, AlertIcon, AlertTitle } from "@yamada-ui/react";
+import { createContext, useCallback, useContext, type FC, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 export type AlertStatus = {
@@ -50,14 +50,16 @@ export const AlertProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <Provider value={[]}>
       {children}
-      {createPortal(
-        <div style={{ position: "fixed", top: 24, right: 24 }}>
-          {alerts.map((alert) => (
-            <AlertComponent key={alert.id} {...alert} />
-          ))}
-        </div>,
-        document.body,
-      )}
+      <>
+        {createPortal(
+          <div style={{ position: "fixed", top: 24, right: 24 }}>
+            {alerts.map((alert) => (
+              <AlertComponent key={alert.id} {...alert} />
+            ))}
+          </div>,
+          document.body,
+        )}
+      </>
     </Provider>
   );
 };
