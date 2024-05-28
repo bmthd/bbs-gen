@@ -6,7 +6,6 @@ export const DeleteButton: FC = () => {
   const ref = useRef<{ confirm: () => Promise<boolean> }>(null);
 
   const handleClick = useCallback(async () => {
-    console.log(ref.current);
     if (await ref.current?.confirm()) {
       console.log("削除処理を実行");
     }
