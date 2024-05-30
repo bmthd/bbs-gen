@@ -1,6 +1,16 @@
+import type { Todo } from "@/features/todo/types";
 import { getFormProps, getInputProps, getTextareaProps, useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-import { Button, Checkbox, Input, Label, Textarea, VStack } from "@yamada-ui/react";
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  Input,
+  Label,
+  Text,
+  Textarea,
+  VStack,
+} from "@yamada-ui/react";
 import type { FC } from "react";
 import { z } from "zod";
 import { useTodoMutation } from "../-state";
@@ -21,20 +31,29 @@ export const TodoForm: FC = () => {
     id: "todo",
     shouldValidate: "onBlur",
     onValidate: ({ formData }) => parseWithZod(formData, { schema }),
-    onSubmit: (e, { submission }) => {
-      e.preventDefault();
-      if (!submission) return;
+    onSubmit: (event, { submission }) => {
+      event.preventDefault();
+      if (!submission || submission.status === "error") return;
       console.log(JSON.stringify(submission.payload, null, 2));
-      addTodo(submission.payload);
+      addTodo(submission.payload as Omit<Todo, "id">);
+      event.target.reset();
     },
   });
 
   return (
     <VStack as="form" {...getFormProps(form)}>
-      <Label htmlFor={fields.title.id}>タイトル</Label>
-      <Input {...getInputProps(fields.title, { type: "text" })} />
+      <FormControl>
+        <Label htmlFor={fields.title.id}>タイトル</Label>
+        <Input {...getInputProps(fields.title, { type: "text" })} />
+        <Text color="red.500" id={fields.title.errorId}>
+          {fields.title.errors}
+        </Text>
+      </FormControl>
       <Label htmlFor={fields.content.id}>内容</Label>
       <Textarea {...getTextareaProps(fields.content)} />
+      <Text color="red.500" id={fields.content.errorId}>
+        {fields.content.errors}
+      </Text>
       <Label htmlFor={fields.isComplete.id}>完了</Label>
       <Checkbox
         defaultChecked={false}
