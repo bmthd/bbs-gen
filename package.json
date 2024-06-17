@@ -15,18 +15,18 @@
   },
   "dependencies": {
     "@conform-to/react": "^1.1.3",
-    "@conform-to/zod": "^1.1.3",
     "@tanstack/react-router": "^1.31.20",
     "@tanstack/router-devtools": "^1.31.20",
     "@tanstack/router-vite-plugin": "^1.31.18",
     "@yamada-ui/react": "^1.3.9",
+    "conform-to-valibot": "^1.10.0",
     "jotai": "^2.8.0",
     "jotai-utils": "^0.0.0",
     "midashi": "^0.3.2",
     "react": "^19.0.0-rc-935180c7e0-20240524",
     "react-dom": "^19.0.0-rc-935180c7e0-20240524",
     "react-hook-form": "^7.51.5",
-    "zod": "^3.23.8"
+    "valibot": "^0.32.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",

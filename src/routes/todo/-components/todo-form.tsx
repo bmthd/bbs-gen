@@ -1,6 +1,5 @@
 import type { Todo } from "@/features/todo/types";
 import { getFormProps, getInputProps, getTextareaProps, useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod";
 import {
   Button,
   Checkbox,
@@ -11,18 +10,26 @@ import {
   Textarea,
   VStack,
 } from "@yamada-ui/react";
+import { parseWithValibot } from "conform-to-valibot";
 import type { FC } from "react";
-import { z } from "zod";
+import * as v from "valibot";
 import { useTodoMutation } from "../-state";
 
-const schema = z.object({
-  title: z
-    .string({ required_error: "タイトルを入力してください" })
-    .max(32, "タイトルは32文字以内で入力してください"),
-  content: z
-    .string({ required_error: "内容を入力してください" })
-    .max(4095, "内容は4095文字以内で入力してください"),
-  isComplete: z.coerce.boolean(),
+const schema = v.object({
+  title: v.pipe(
+    v.string("タイトルを入力してください"),
+    v.nonEmpty("タイトルを入力してください"),
+    v.maxLength(32, "タイトルは32文字以内で入力してください"),
+  ),
+  content: v.pipe(
+    v.string("内容を入力してください"),
+    v.nonEmpty("内容を入力してください"),
+    v.maxLength(4095, "内容は4095文字以内で入力してください"),
+  ),
+  isComplete: v.pipe(
+    v.unknown(),
+    v.transform((value) => Boolean(value)),
+  ),
 });
 
 export const TodoForm: FC = () => {
@@ -30,7 +37,7 @@ export const TodoForm: FC = () => {
   const [form, fields] = useForm({
     id: "todo",
     shouldValidate: "onBlur",
-    onValidate: ({ formData }) => parseWithZod(formData, { schema }),
+    onValidate: ({ formData }) => parseWithValibot(formData, { schema }),
     onSubmit: (event, { submission }) => {
       event.preventDefault();
       if (!submission || submission.status === "error") return;
