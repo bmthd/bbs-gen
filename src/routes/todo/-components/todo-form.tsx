@@ -1,4 +1,3 @@
-import type { Todo } from "@/features/todo/types";
 import { getFormProps, getInputProps, getTextareaProps, useForm } from "@conform-to/react";
 import {
   Button,
@@ -10,7 +9,7 @@ import {
   Textarea,
   VStack,
 } from "@yamada-ui/react";
-import { parseWithValibot } from "conform-to-valibot";
+import { getValibotConstraint, parseWithValibot } from "conform-to-valibot";
 import type { FC } from "react";
 import * as v from "valibot";
 import { useTodoMutation } from "../-state";
@@ -35,14 +34,14 @@ const schema = v.object({
 export const TodoForm: FC = () => {
   const { addTodo } = useTodoMutation();
   const [form, fields] = useForm({
-    id: "todo",
     shouldValidate: "onBlur",
+    shouldRevalidate: "onInput",
+    constraint: getValibotConstraint(schema),
     onValidate: ({ formData }) => parseWithValibot(formData, { schema }),
     onSubmit: (event, { submission }) => {
       event.preventDefault();
-      if (!submission || submission.status === "error") return;
-      console.log(JSON.stringify(submission.payload, null, 2));
-      addTodo(submission.payload as Omit<Todo, "id">);
+      if (submission?.status !== "success") return;
+      addTodo(submission.value);
       event.target.reset();
     },
   });

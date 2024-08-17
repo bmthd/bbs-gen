@@ -8,6 +8,6 @@ export type Todo = {
   title: string;
   content: string;
   isComplete: boolean;
-  category: Category;
-  createdAt: string;
+  category?: Category;
+  createdAt?: string;
 };
