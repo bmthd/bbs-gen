@@ -1,30 +1,28 @@
-import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { Link as A, Container, Divider, HStack, UIProvider } from "@yamada-ui/react";
 import "@/assets/app.css";
+import theme from "@/theme";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { Container, Divider, HStack, Link, UIProvider } from "@yamada-ui/react";
+import { Suspense } from "react";
+import { lazily } from "react-lazily";
 
-export const Route = createRootRoute({
-  component: () => (
-    <UIProvider>
+const component = () => {
+  const { TanStackRouterDevtools } = lazily(() => import("@tanstack/router-devtools"));
+  return (
+    <UIProvider theme={theme}>
       <Container>
         <HStack className="p-2 flex gap-2">
-          <Link to="/" className="[&.active]:font-bold">
-            <A>Home</A>
-          </Link>
-          <Link to="/about" className="[&.active]:font-bold">
-            <A>About</A>
-          </Link>
-          <Link to="/todo" className="[&.active]:font-bold">
-            <A>Todo</A>
-          </Link>
-          <Link to="/midashi">
-            <A>Midashi</A>
-          </Link>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/todo">Todo</Link>
         </HStack>
         <Divider />
         <Outlet />
-        <TanStackRouterDevtools />
+        <Suspense>{process.env.NODE_ENV === "development" && <TanStackRouterDevtools />}</Suspense>
       </Container>
     </UIProvider>
-  ),
+  );
+};
+
+export const Route = createRootRoute({
+  component,
 });

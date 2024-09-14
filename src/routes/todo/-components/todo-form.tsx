@@ -42,11 +42,12 @@ export const TodoForm: FC = () => {
       event.preventDefault();
       if (submission?.status !== "success") return;
       addTodo(submission.value);
-      event.target.reset();
+      event.currentTarget.reset();
     },
   });
 
   return (
+    // @ts-ignore
     <VStack as="form" {...getFormProps(form)}>
       <FormControl>
         <Label htmlFor={fields.title.id}>タイトル</Label>

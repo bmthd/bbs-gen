@@ -1,8 +1,8 @@
 /// <reference types="vitest"/>
 
-import tailwindcss from "@tailwindcss/vite";
+import tailwindCSS from "@tailwindcss/vite";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { defaultConfig, getColorModeScript } from "@yamada-ui/react";
 import * as path from "node:path";
 import { defineConfig, type Plugin } from "vite";
@@ -19,7 +19,16 @@ const injectScript = (): Plugin => ({
 });
 
 export default defineConfig({
-  plugins: [react(), TanStackRouterVite(), injectScript(), tailwindcss()],
+  plugins: [
+    react({
+      babel: {
+        plugins: [["babel-plugin-react-compiler"]],
+      },
+    }),
+    TanStackRouterVite(),
+    injectScript(),
+    tailwindCSS(),
+  ],
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },

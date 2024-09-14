@@ -1,5 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { H, Main, Section } from "midashi";
+import { createLazyFileRoute } from '@tanstack/react-router'
+import { H, Main, Section } from 'midashi'
 
 const component = () => (
   <>
@@ -20,8 +20,8 @@ const component = () => (
       </Section>
     </Main>
   </>
-);
+)
 
-export const Route = createFileRoute("/midashi")({
+export const Route = createLazyFileRoute('/midashi')({
   component,
-});
+})
