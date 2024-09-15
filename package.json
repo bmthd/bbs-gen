@@ -29,7 +29,7 @@
     "react-dom": "^19.0.0-rc-935180c7e0-20240524",
     "react-hook-form": "^7.51.5",
     "react-lazily": "^0.9.2",
-    "valibot": "^0.41.0"
+    "valibot": "^0.42.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",
